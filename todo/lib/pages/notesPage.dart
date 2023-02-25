@@ -58,7 +58,6 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -81,25 +80,52 @@ class _NotesPageState extends State<NotesPage> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.transparent,
                       elevation: 0,
-                      content: MySnackbarContent()));
+                      content: MySnackbarContent(
+                        snackBarText:
+                            "Oops!! Seems That you've written Nothing!!",
+                        snackBarColor: Colors.cyan.shade300,
+                        snackBarIcon: Icon(
+                          Icons.question_mark,
+                          size: 17,
+                        ),
+                      )));
                 } else if (widget.isEdit) {
                   db.loadData();
-                  // print(db.notesList[0].content);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      content: MySnackbarContent(
+                        
+                        snackBarText: "Changes saved successfully",
+                        snackBarColor: Colors.pink.shade300,
+                        snackBarIcon: Icon(
+                          Icons.done,
+                          size: 17,
+                        ),
+                      )));
                   db.notesList[widget.index] = ModalInfo(
                     content: contentController.text,
                     titleText: titleController.text,
-                    // color: widget.listOfTiles[widget.index].color,
                     datetimeInfo: db.notesList[widget.index].datetimeInfo,
                   );
                   db.updateData();
                   Navigator.of(context).pop();
                 } else {
                   db.loadData();
-                  print(db.notesList);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      content: MySnackbarContent(
+                        snackBarText: "Note added successfully",
+                        snackBarColor: Colors.orange.shade300,
+                        snackBarIcon: Icon(
+                          Icons.done,
+                          size: 17,
+                        ),
+                      )));
                   db.notesList.add(ModalInfo(
                       content: contentController.text,
                       titleText: titleController.text,
-                      // color: colors[widget.listOfTiles.length % colors.length],
                       datetimeInfo: DateTime.now()));
                   db.updateData();
                   Navigator.of(context).pop();
@@ -124,6 +150,7 @@ class _NotesPageState extends State<NotesPage> {
                     borderRadius: BorderRadius.circular(12)),
                 child: TextFormField(
                   // Title Text Field
+                  
                   controller: titleController,
                   onChanged: (value) {
                     setState(() {

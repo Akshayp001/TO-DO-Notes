@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MySnackbarContent extends StatelessWidget {
-  // const MySnackbar({Key key}) : super(key: key);
+  String snackBarText;
+  Icon snackBarIcon;
+  Color snackBarColor;
+
+  MySnackbarContent(
+      {@required this.snackBarColor,
+      @required this.snackBarIcon,
+      @required this.snackBarText});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +23,11 @@ class MySnackbarContent extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-                color: Colors.cyan.shade300,
+                color: snackBarColor,
                 border: Border.all(color: Colors.blue, width: 3),
                 borderRadius: BorderRadius.circular(12)),
             child: Text(
-              "Oops!! Seems That you've written Nothing!!",
+              snackBarText,
               style: TextStyle(color: Colors.black, fontSize: 16),
             )),
       ),
@@ -30,10 +37,7 @@ class MySnackbarContent extends StatelessWidget {
         // left: -10,
         child: Container(
           child: Center(
-            child: Icon(
-              Icons.question_mark,
-              size: 17,
-            ),
+            child: snackBarIcon,
           ),
           height: 24,
           width: 24,

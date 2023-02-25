@@ -4,6 +4,8 @@ import 'package:todo/data/dataBase.dart';
 import 'package:todo/modal/modalInfo.dart';
 import 'package:todo/pages/notesPage.dart';
 import 'package:todo/widgets/gridTile.dart';
+import '../widgets/mydrawer.dart';
+import '../widgets/snackBarContent.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,25 +44,25 @@ class _HomePageState extends State<HomePage> {
       db.loadData();
     }
     super.initState();
-    // db.notesList = doInit();
   }
-
-  // List<ModalInfo> doInit() {
-  //   List<ModalInfo> temp = listBox.get(1);
-  //   if (temp == null) {
-  //     return [];
-  //   }
-  //   return temp;
-  // }
-  // List<ModalInfo> doInit() {
-  //   return db.db.notesList;
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: MyDrawer(),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        // leading: Builder(
+        //   builder: (context) {
+        //     return IconButton(
+        //       icon: Icon(
+        //         Icons.menu_rounded,
+        //         color: Colors.white,
+        //       ),
+        //       onPressed: () => Scaffold.of(context).openDrawer(),
+        //     );
+        //   }
+        // ),
         foregroundColor: Colors.transparent,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -80,7 +82,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              // db.notesList[1].titleText = "patil";
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => NotesPage(
                         isEdit: false,
@@ -110,7 +111,6 @@ class _HomePageState extends State<HomePage> {
               crossAxisSpacing: 5,
               childAspectRatio: 0.6,
             ),
-            // itemCount: (db.notesList.length==null)?0:db.notesList.length,
             itemCount: db.notesList.length,
             itemBuilder: (context, index) {
               return InkWell(
@@ -128,16 +128,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Stack(children: [
                     Gridtile(
-                        // deleteTile: () {
-                        //   setState(() {
-                        //     db.notesList.removeAt(index);
-                        //     db.updateData();
-                        //     db.loadData();
-                        //   });
-                        // },
-                        notesList: db.notesList,
-                        index: index,
-                        ctx: context),
+                        notesList: db.notesList, index: index, ctx: context),
                     Positioned(
                       top: 16,
                       left: 11,
@@ -147,6 +138,17 @@ class _HomePageState extends State<HomePage> {
                             db.notesList.removeAt(index);
                             db.updateData();
                             db.loadData();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                content: MySnackbarContent(
+                                  snackBarText: "Note Deleted successfully",
+                                  snackBarColor: Colors.red,
+                                  snackBarIcon: Icon(
+                                    Icons.delete,
+                                    size: 17,
+                                  ),
+                                )));
                           });
                         },
                         child: Container(

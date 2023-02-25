@@ -21,45 +21,16 @@ List<Color> colors = [
 class DataBase {
   final _mybox = Hive.box("NotesData1");
   List<ModalInfo> notesList;
-  //   ModalInfo(
-  //       content: "TemptextContent",
-  //       titleText: "Akshay",
-  //       datetimeInfo: DateTime.now(),
-  //       color: colors[0]
-  //       ),
-  //   ModalInfo(
-  //       content: "TemptextContent",
-  //       titleText: "TempTextTitle",
-  //       datetimeInfo: DateTime.now(),
-  //       color: colors[1]
-  //       ),
-  //   ModalInfo(
-  //       content: "TemptextContent",
-  //       titleText: "TempTextTitle",
-  //       datetimeInfo: DateTime.now(),
-  //       color: colors[2]
-  //       ),
-  // ];
 
   void createInitialData() {
     notesList = <ModalInfo>[ModalInfo(content: "Welcome To Notes App",titleText: "Welcome",datetimeInfo: DateTime.now())];
   }
 
   void loadData() {
-    print(_mybox.get("NotesData1"));
-    
     notesList = _mybox.get("NotesData1").cast<ModalInfo>();
   }
 
   void updateData() {
     _mybox.put("NotesData1", notesList);
   }
-
-  // List<ModalInfo> toResponseList(List<dynamic> data) {
-  //   List<ModalInfo> value = <ModalInfo>[];
-  //   data.forEach((element) {
-  //     value.add(NasaResponseModel.fromJson(element));
-  //   });
-  //   return value ?? List<ModalInfo>.empty();
-  // }
 }
